@@ -1,0 +1,26 @@
+def largest_product(series, size):
+    if size > len(series):
+        # span of numbers is longer than number series
+        raise ValueError("span must not exceed string length")
+    elif size < 0:
+        # span of number is negative
+        raise ValueError("span must not be negative")
+    elif not series.isdigit():
+        # series includes non-number input
+        raise ValueError("digits input must only contain digits")
+    possbilities = []
+    for id in range(len(series)):
+        if id + size <= len(series):
+            possbilities.append(series[id : id + size])
+    products = []
+    for item in possbilities:
+        if '0' in item:
+            products.append(0)
+        else:
+            products.append(calculate_product(int(item)))
+    return max(products)
+
+def calculate_product(item):
+    if item < 10:
+        return item
+    return (item % 10) * calculate_product(item // 10)
